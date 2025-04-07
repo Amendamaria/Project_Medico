@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Patient Details</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img class="logo" src="Frame 3 (1).png" alt="Logo" />
+      <h2 class="title">Patient Details</h2>
+    </div>
+
+    <form class="form" onsubmit="return validateForm()">
+        <div class="form-group">
+          <label>Name:</label>
+          <input type="text" name="name" required />
+        </div>
+      
+        <div class="form-group">
+          <label>Age:</label>
+          <input type="number" name="age" required min="0" max="120" />
+        </div>
+      
+        <div class="form-group gender">
+            <label>Gender:</label><br />
+            <label><input type="radio" name="gender" value="Male" required /> Male</label>
+            <label><input type="radio" name="gender" value="Female" /> Female</label>
+            <label><input type="radio" name="gender" value="Others" id="genderOthers" /> Others</label>
+          </div>
+          
+          <div class="form-group" id="otherGenderTextBox" style="display: none;">
+            <label>Please specify:</label>
+            <textarea name="specifyGender" id="specifyGender" rows="2" cols="30" placeholder="Please specify your gender"></textarea>
+          </div>
+          
+          
+      
+        <div class="form-group">
+          <label>Ph. No:</label>
+          <input type="tel" name="phone" pattern="[0-9]{10}" title="Enter a 10-digit phone number" required />
+        </div>
+      
+        <div class="form-group">
+          <label>Place:</label>
+          <input type="text" name="place" required />
+        </div>
+      
+        <button type="submit">Next</button>
+      </form>
+      
+  </div>
+</body>
+<script src="script.js"></script>
+</html>
