@@ -60,9 +60,14 @@ body{
     margin: auto;
     padding: 20px;
   }
-  
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
   .header {
-    margin-top: 25%;
+    /* margin-top: 25%; */
     display: flex;
     justify-content: space-between;
     align-items: center;     
