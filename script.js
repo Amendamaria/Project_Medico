@@ -26,7 +26,6 @@ form.addEventListener("submit", function (e) {
 
   const dbRef = db.ref();
 
-  // Step 1: Check for duplicate (based on name and phone)
   dbRef.child("patients").once("value", snapshot => {
     let isDuplicate = false;
 
