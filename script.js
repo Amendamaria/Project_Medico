@@ -16,42 +16,63 @@ const form = document.querySelector(".form");
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const name = form.name.value;
+  const name = form.name.value.trim().toLowerCase();
   const age = form.age.value;
   const gender = form.gender.value;
   const specifyGender = form.specifyGender?.value || "";
-  const phone = form.phone.value;
+  const phone = form.phone.value.trim();
   const place = form.place.value;
   const finalGender = gender === "Others" ? specifyGender : gender;
 
   const dbRef = db.ref();
 
-  dbRef.child("patientCounter").transaction((currentValue) => {
-    return (currentValue || 1000) + 1; // Start from 1001
-  }, (error, committed, snapshot) => {
-    if (error) {
-      console.error("❌ Transaction failed:", error);
-    } else if (committed) {
-      const patientId = snapshot.val(); // Numeric ID
+  // Step 1: Check for duplicate (based on name and phone)
+  dbRef.child("patients").once("value", snapshot => {
+    let isDuplicate = false;
 
-      const patientData = {
-        patientId,
-        name,
-        age,
-        gender: finalGender,
-        phone,
-        place
-      };
+    snapshot.forEach(child => {
+      const data = child.val();
+      if (
+        data.name?.toLowerCase() === name &&
+        data.phone === phone
+      ) {
+        isDuplicate = true;
+      }
+    });
 
-      dbRef.child("patients").child(patientId).set(patientData)
-        .then(() => {
-          localStorage.setItem("patientId", patientId);
-          alert("✅ Patient saved with ID: " + patientId);
-          window.location.href = "dept.html";
-        })
-        .catch((err) => {
-          console.error("❌ Firebase error:", err);
-        });
+    if (isDuplicate) {
+      alert("❌ Patient with the same name and phone number already exists!");
+      return;
     }
+
+    // Step 2: No duplicate, proceed to save
+    dbRef.child("patientCounter").transaction((currentValue) => {
+      return (currentValue || 99999) + 1;
+    }, (error, committed, snapshot) => {
+      if (error) {
+        console.error("❌ Transaction failed:", error);
+      } else if (committed) {
+        const rawPatientId = snapshot.val();
+        const patientId = rawPatientId.toString().padStart(6, '0');
+
+        const patientData = {
+          patientId,
+          name,
+          age,
+          gender: finalGender,
+          phone,
+          place
+        };
+
+        dbRef.child("patients").child(patientId).set(patientData)
+          .then(() => {
+            localStorage.setItem("patientId", patientId);
+            window.location.href = "dept.html";
+          })
+          .catch((err) => {
+            console.error("❌ Firebase error:", err);
+          });
+      }
+    });
   });
 });
