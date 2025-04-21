@@ -27,22 +27,22 @@ form.addEventListener("submit", function (e) {
   const dbRef = db.ref();
 
   dbRef.child("patients").once("value", snapshot => {
-    let isDuplicate = false;
+    // let isDuplicate = false;
 
-    snapshot.forEach(child => {
-      const data = child.val();
-      if (
-        data.name?.toLowerCase() === name &&
-        data.phone === phone
-      ) {
-        isDuplicate = true;
-      }
-    });
+    // snapshot.forEach(child => {
+    //   const data = child.val();
+    //   if (
+    //     data.name?.toLowerCase() === name &&
+    //     data.phone === phone
+    //   ) {
+    //     isDuplicate = true;
+    //   }
+    // });
 
-    if (isDuplicate) {
-      alert("❌ Patient with the same name and phone number already exists!");
-      return;
-    }
+    // if (isDuplicate) {
+    //   alert("❌ Patient with the same name and phone number already exists!");
+    //   return;
+    // }
 
     // Step 2: No duplicate, proceed to save
     dbRef.child("patientCounter").transaction((currentValue) => {

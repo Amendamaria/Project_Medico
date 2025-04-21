@@ -52,6 +52,11 @@ form.addEventListener("submit", function (e) {
         tokenDate: dateKey
       })
       .then(() => {
+        // Store department and token number in localStorage
+        localStorage.setItem("tokenNumber", tokenNumber);
+        localStorage.setItem("department", dept);
+        
+        // Redirect to success page
         window.location.href = "success.html";
       })
       .catch((err) => {
@@ -60,5 +65,3 @@ form.addEventListener("submit", function (e) {
     }
   });
 });
-
-  
