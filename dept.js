@@ -30,7 +30,7 @@ form.addEventListener("submit", function (e) {
     return;
   }
 
-  // Date key in DD-MM-YYYY
+ 
   const today = new Date();
   const dateKey = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
@@ -56,7 +56,7 @@ form.addEventListener("submit", function (e) {
         localStorage.setItem("tokenNumber", tokenNumber);
         localStorage.setItem("department", dept);
         
-        // Redirect to success page
+       
         window.location.href = "success.html";
       })
       .catch((err) => {

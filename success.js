@@ -12,11 +12,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// Retrieve the patient ID from localStorage
 const patientId = localStorage.getItem("patientId");
 
 if (patientId) {
-  // Fetch the patient's data from Firebase using the patientId
+
   db.ref("patients").child(patientId).once("value", snapshot => {
     const patientData = snapshot.val();
 
@@ -36,7 +35,7 @@ if (patientId) {
       document.getElementById("patientAgeDisplay").textContent = `Age: ${patientAge}`;
       document.getElementById("patientPhoneDisplay").textContent = `Phone Number: ${patientPhone}`;
 
-      // Log all the data to the console
+   
       console.log("Patient ID:", patientId);
       console.log("Patient Name:", patientName);
       console.log("Age:", patientAge);
@@ -53,7 +52,7 @@ if (patientId) {
   console.error("Patient ID not found in localStorage.");
 }
 
-// Optional: Redirect after 3 seconds
+//timeout 10sec
 setTimeout(() => {
   window.location.href = "index.html";
 }, 10000);

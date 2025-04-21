@@ -16,7 +16,7 @@ const form = document.querySelector(".form");
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const name = form.name.value.trim().toLowerCase();
+  const name = form.name.value.trim().toUpperCase();
   const age = form.age.value;
   const gender = form.gender.value;
   const specifyGender = form.specifyGender?.value || "";
@@ -27,24 +27,8 @@ form.addEventListener("submit", function (e) {
   const dbRef = db.ref();
 
   dbRef.child("patients").once("value", snapshot => {
-    // let isDuplicate = false;
 
-    // snapshot.forEach(child => {
-    //   const data = child.val();
-    //   if (
-    //     data.name?.toLowerCase() === name &&
-    //     data.phone === phone
-    //   ) {
-    //     isDuplicate = true;
-    //   }
-    // });
-
-    // if (isDuplicate) {
-    //   alert("❌ Patient with the same name and phone number already exists!");
-    //   return;
-    // }
-
-    // Step 2: No duplicate, proceed to save
+    //  proceed to save
     dbRef.child("patientCounter").transaction((currentValue) => {
       return (currentValue || 99999) + 1;
     }, (error, committed, snapshot) => {
